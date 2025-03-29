@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +12,12 @@
             padding: 0;
             font-family: 'Arial', sans-serif;
         }
+
         body {
             padding: 20px;
             background-color: #f5f5f5;
         }
+
         .container {
             display: flex;
             flex-direction: column;
@@ -25,51 +28,63 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
+
         .tabs {
             display: flex;
             background-color: #333;
         }
+
         .tab {
             padding: 15px 20px;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .tab.active {
             background-color: #4CAF50;
         }
+
         .tab:hover:not(.active) {
             background-color: #555;
         }
+
         .tab-content {
             display: none;
             padding: 20px;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .row {
             display: flex;
             margin-bottom: 20px;
         }
+
         .col-left {
             flex: 1;
             padding-right: 20px;
         }
+
         .col-right {
             flex: 1;
             position: relative;
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], 
-        input[type="number"], 
+
+        input[type="text"],
+        input[type="number"],
         input[type="date"],
         input[type="datetime-local"],
         select {
@@ -79,23 +94,29 @@
             border-radius: 4px;
             font-size: 14px;
         }
+
         .input-group {
             display: flex;
             gap: 10px;
         }
+
         .input-group input,
         .input-group select {
             flex: 1;
         }
+
         .checkbox-group {
             display: flex;
             align-items: center;
             margin-top: 5px;
         }
+
         .checkbox-group input {
             margin-right: 8px;
         }
-        #jsonOutput, #jsonOutput2 {
+
+        #jsonOutput,
+        #jsonOutput2 {
             width: 100%;
             height: 500px;
             padding: 15px;
@@ -107,6 +128,7 @@
             white-space: pre;
             overflow-y: auto;
         }
+
         button {
             padding: 10px 15px;
             background-color: #4CAF50;
@@ -117,9 +139,11 @@
             font-size: 14px;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #45a049;
         }
+
         .copy-btn {
             position: absolute;
             top: 10px;
@@ -128,6 +152,7 @@
             font-size: 12px;
             z-index: 100;
         }
+
         .tag-container {
             display: flex;
             flex-wrap: wrap;
@@ -137,6 +162,7 @@
             border-radius: 4px;
             min-height: 42px;
         }
+
         .tag {
             display: inline-block;
             background-color: #e0e0e0;
@@ -145,24 +171,30 @@
             font-size: 12px;
             cursor: pointer;
         }
+
         .tag.selected {
             background-color: #4CAF50;
             color: white;
         }
+
         .tag-selector {
             margin-top: 10px;
         }
+
         .carrier-routes {
             margin-top: 10px;
         }
+
         .carrier-group {
             margin-bottom: 10px;
         }
+
         .carrier-label {
             display: inline-block;
             width: 50px;
             font-weight: bold;
         }
+
         .section-title {
             font-size: 18px;
             margin-bottom: 15px;
@@ -172,29 +204,30 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="tabs">
             <div class="tab active" onclick="switchTab(0)">公开备注代码</div>
             <div class="tab" onclick="switchTab(1)">流量监控代码</div>
         </div>
-        
+
         <!-- 公开备注代码 -->
         <div class="tab-content active" id="publicNoteTab">
             <div class="row">
                 <div class="col-left">
                     <h3 class="section-title">公开备注代码配置</h3>
-                    
+
                     <div class="form-group">
                         <label>账单起始日期 (startDate)</label>
                         <input type="datetime-local" id="startDate">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>账单结束日期 (endDate)</label>
                         <input type="datetime-local" id="endDate">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>自动续费状态 (autoRenewal)</label>
                         <select id="autoRenewal">
@@ -202,7 +235,7 @@
                             <option value="0">禁用 (0)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>账单周期 (cycle)</label>
                         <select id="cycle" onchange="toggleCustomCycle()">
@@ -212,7 +245,7 @@
                         </select>
                         <input type="text" id="cycleCustom" placeholder="自定义周期" style="display:none; margin-top:5px;">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>账单金额及货币单位 (amount)</label>
                         <div class="checkbox-group">
@@ -231,9 +264,10 @@
                                 <option value="custom">自定义</option>
                             </select>
                         </div>
-                        <input type="text" id="amountCustom" placeholder="自定义货币单位" style="display:none; margin-top:5px;">
+                        <input type="text" id="amountCustom" placeholder="自定义货币单位"
+                            style="display:none; margin-top:5px;">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>服务器带宽信息 (bandwidth)</label>
                         <div class="checkbox-group">
@@ -248,9 +282,10 @@
                                 <option value="custom">自定义</option>
                             </select>
                         </div>
-                        <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位" style="display:none; margin-top:5px;">
+                        <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位"
+                            style="display:none; margin-top:5px;">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>流量配额及周期 (trafficVol)</label>
                         <div class="checkbox-group">
@@ -276,7 +311,7 @@
                             <input type="text" id="trafficPeriodCustom" placeholder="自定义周期">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>流量类型 (trafficType)</label>
                         <select id="trafficType">
@@ -284,24 +319,24 @@
                             <option value="2">双向 (2)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>IPv4 地址数量</label>
                         <input type="number" id="ipv4" min="0" value="1">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>IPv6 地址数量</label>
                         <input type="number" id="ipv6" min="0" value="1">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>网络路由信息 (networkRoute)</label>
                         <select id="routeMode" onchange="toggleRouteMode()">
                             <option value="tags">多选标签模式</option>
                             <option value="carriers">分运营商线路模式</option>
                         </select>
-                        
+
                         <!-- 多选标签模式 -->
                         <div id="tagsMode" class="tag-selector">
                             <div class="tag-container" id="routeTags">
@@ -316,7 +351,7 @@
                                 <span class="tag" onclick="toggleTag(this)">IPLC</span>
                             </div>
                         </div>
-                        
+
                         <!-- 运营商线路模式 -->
                         <div id="carriersMode" class="carrier-routes" style="display:none;">
                             <div class="carrier-group">
@@ -374,12 +409,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>额外备注 (extra)</label>
                         <input type="text" id="extra">
                     </div>
-                    
+
                     <button onclick="generatePublicNoteJSON()">生成 JSON</button>
                 </div>
                 <div class="col-right">
@@ -388,13 +423,13 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 流量监控代码 -->
         <div class="tab-content" id="trafficMonitorTab">
             <div class="row">
                 <div class="col-left">
                     <h3 class="section-title">流量监控代码配置</h3>
-                    
+
                     <div class="form-group">
                         <label>监控类型 (type)</label>
                         <select id="monitorType">
@@ -403,7 +438,7 @@
                             <option value="transfer_all_cycle">双向流量总和</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>最大流量限制 (max)</label>
                         <div class="input-group">
@@ -415,17 +450,17 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>统计周期开始日期 (cycle_start)</label>
                         <input type="datetime-local" id="cycleStart">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>统计周期数量 (cycle_interval)</label>
                         <input type="number" id="cycleInterval" min="1" value="1">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>统计周期单位 (cycle_unit)</label>
                         <select id="cycleUnit">
@@ -436,7 +471,7 @@
                             <option value="year">年 (year)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group" style="display:none;">
                         <label>是否覆盖 (cover)</label>
                         <select id="cover">
@@ -444,12 +479,12 @@
                             <option value="0">否 (0)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>监控的服务器ID (ignore)</label>
                         <input type="text" id="ignore" placeholder="输入服务器ID，用逗号分隔，如：3,4">
                     </div>
-                    
+
                     <button onclick="generateTrafficMonitorJSON()">生成 JSON</button>
                 </div>
                 <div class="col-right">
@@ -461,6 +496,11 @@
     </div>
 
     <script>
+        function formatDateWithTimezone(dateTimeString) {
+            // The input will be like "2025-03-25T00:00"
+            // We need to convert it to "2025-03-25T00:00:00+08:00"
+            return dateTimeString + ":00+08:00";
+        }
         // 初始化日期时间输入框
         document.getElementById('startDate').value = getNowDateTimeLocal();
         document.getElementById('endDate').value = getNowDateTimeLocal();
@@ -473,6 +513,7 @@
             const day = String(now.getDate()).padStart(2, '0');
             const hour = '00';
             const minute = '00';
+            const second = '00';
             return `${year}-${month}-${day}T${hour}:${minute}`;
         }
 
@@ -645,8 +686,8 @@
             const jsonOutput = document.getElementById('jsonOutput');
             const json = {
                 billingDataMod: {
-                    startDate: startDate,
-                    endDate: endDate,
+                    startDate: formatDateWithTimezone(startDate),
+                    endDate: formatDateWithTimezone(endDate),
                     autoRenewal: autoRenewal,
                     cycle: cycle,
                     amount: amount
@@ -698,7 +739,7 @@
                 {
                     type: monitorType,
                     max: maxBytes,
-                    cycle_start: cycleStart + '+08:00',
+                    cycle_start: formatDateWithTimezone(cycleStart),
                     cycle_interval: parseInt(cycleInterval),
                     cycle_unit: cycleUnit,
                     cover: parseInt(cover),
@@ -710,4 +751,5 @@
         }
     </script>
 </body>
+
 </html>
