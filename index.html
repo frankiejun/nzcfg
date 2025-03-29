@@ -181,6 +181,10 @@
             margin-top: 10px;
         }
 
+        .tag-container {
+            margin-top: 10px;
+        }
+
         .carrier-routes {
             margin-top: 10px;
         }
@@ -201,6 +205,74 @@
             padding-bottom: 5px;
             border-bottom: 1px solid #eee;
             color: #333;
+        }
+
+        /* 新增样式 */
+        .traffic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .traffic-grid > *:nth-child(1) { /* 流量数值占据第一列 */
+          grid-column: 1 / 2;
+        }
+
+        .traffic-grid > *:nth-child(2) { /* 流量单位占据第二列 */
+          grid-column: 2 / 3;
+        }
+
+        .traffic-grid > *:nth-child(3) { /* 流量周期占据第三列 */
+          grid-column: 3 / 4;
+        }
+
+        .traffic-grid > *:nth-child(4) { /* 自定义流量单位占据第二列 */
+          grid-column: 2 / 3;
+        }
+
+        .traffic-grid > *:nth-child(5) { /* 自定义流量周期占据第三列 */
+          grid-column: 3 / 4;
+        }
+
+        .traffic-grid > *:nth-child(1),
+        .traffic-grid > *:nth-child(4) {
+            width: 100%;
+        }
+
+        .amount-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .amount-grid > *:nth-child(1) {
+            grid-column: 1 / 2;
+        }
+
+        .amount-grid > *:nth-child(2) {
+            grid-column: 2 / 3;
+        }
+
+        .amount-grid > *:nth-child(3) {
+            grid-column: 2 / 3;
+        }
+
+        .bandwidth-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .bandwidth-grid > *:nth-child(1) {
+            grid-column: 1 / 2;
+        }
+
+        .bandwidth-grid > *:nth-child(2) {
+            grid-column: 2 / 3;
+        }
+
+        .bandwidth-grid > *:nth-child(3) {
+            grid-column: 2 / 3;
         }
     </style>
 </head>
@@ -241,6 +313,10 @@
                         <select id="cycle" onchange="toggleCustomCycle()">
                             <option value="月">月</option>
                             <option value="年">年</option>
+                            <option value="季">季</option>
+                            <option value="半年">半年</option>
+                            <option value="2年">2年</option>
+                            <option value="3年">3年</option>
                             <option value="custom">自定义</option>
                         </select>
                         <input type="text" id="cycleCustom" placeholder="自定义周期" style="display:none; margin-top:5px;">
@@ -252,7 +328,7 @@
                             <input type="checkbox" id="freeamount" onchange="toggleAmount()">
                             <label for="freeamount" style="display:inline; font-weight:normal;">免费</label>
                         </div>
-                        <div class="input-group" id="amountInputGroup">
+                        <div class="amount-grid" id="amountInputGroup">
                             <input type="number" id="amountValue" placeholder="金额">
                             <select id="amountCurrency" onchange="toggleCustomAmount()">
                                 <option value="元">元</option>
@@ -263,9 +339,9 @@
                                 <option value="EUR">EUR</option>
                                 <option value="custom">自定义</option>
                             </select>
+                            <input type="text" id="amountCustom" placeholder="自定义货币单位"
+                                style="display:none;">
                         </div>
-                        <input type="text" id="amountCustom" placeholder="自定义货币单位"
-                            style="display:none; margin-top:5px;">
                     </div>
 
                     <div class="form-group">
@@ -274,16 +350,16 @@
                             <input type="checkbox" id="unlimitedBandwidth" onchange="toggleBandwidth()">
                             <label for="unlimitedBandwidth" style="display:inline; font-weight:normal;">无限</label>
                         </div>
-                        <div class="input-group" id="bandwidthInputGroup">
+                        <div class="bandwidth-grid" id="bandwidthInputGroup">
                             <input type="number" id="bandwidthValue" placeholder="带宽">
                             <select id="bandwidthUnit" onchange="toggleCustomBandwidth()">
                                 <option value="Gbps">Gbps</option>
                                 <option value="Mbps">Mbps</option>
                                 <option value="custom">自定义</option>
                             </select>
+                            <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位"
+                                style="display:none;">
                         </div>
-                        <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位"
-                            style="display:none; margin-top:5px;">
                     </div>
 
                     <div class="form-group">
@@ -292,7 +368,7 @@
                             <input type="checkbox" id="unlimitedTraffic" onchange="toggleTraffic()">
                             <label for="unlimitedTraffic" style="display:inline; font-weight:normal;">无限</label>
                         </div>
-                        <div class="input-group" id="trafficInputGroup">
+                        <div class="traffic-grid" id="trafficInputGroup">
                             <input type="number" id="trafficValue" placeholder="流量">
                             <select id="trafficUnit" onchange="toggleCustomTraffic()">
                                 <option value="TB">TB</option>
@@ -305,10 +381,8 @@
                                 <option value="/M">/M</option>
                                 <option value="custom">自定义</option>
                             </select>
-                        </div>
-                        <div class="input-group" id="trafficCustomGroup" style="display:none; margin-top:5px;">
-                            <input type="text" id="trafficUnitCustom" placeholder="自定义流量单位">
-                            <input type="text" id="trafficPeriodCustom" placeholder="自定义周期">
+                            <input type="text" id="trafficUnitCustom" placeholder="自定义流量单位" style="display:none;">
+                            <input type="text" id="trafficPeriodCustom" placeholder="自定义周期" style="display:none;">
                         </div>
                     </div>
 
@@ -338,6 +412,10 @@
                         </select>
 
                         <!-- 多选标签模式 -->
+                        <div id="selectedTags">
+                            <div class="tag-container" id="selectedTagsContainer"></div>
+                            <input type="text" id="newTagInput" placeholder="输入标签并按回车添加">
+                        </div>
                         <div id="tagsMode" class="tag-selector">
                             <div class="tag-container" id="routeTags">
                                 <span class="tag" onclick="toggleTag(this)">163</span>
@@ -356,51 +434,97 @@
                         <div id="carriersMode" class="carrier-routes" style="display:none;">
                             <div class="carrier-group">
                                 <span class="carrier-label">电信:</span>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">去程:</span>
                                 <select id="telecomRoute1">
                                     <option value="">留空</option>
                                     <option value="163">163</option>
                                     <option value="CN2">CN2</option>
                                     <option value="CN2GIA">CN2GIA</option>
+                                    <option value="CMI">CMI</option>
+                                    <option value="CMIN2">CMIN2</option>
+                                    <option value="4837">4837</option>
+                                    <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
                                     <option value="IPLC">IPLC</option>
                                 </select>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">回程:</span>
                                 <select id="telecomRoute2">
                                     <option value="">留空</option>
                                     <option value="163">163</option>
                                     <option value="CN2">CN2</option>
                                     <option value="CN2GIA">CN2GIA</option>
+                                    <option value="CMI">CMI</option>
+                                    <option value="CMIN2">CMIN2</option>
+                                    <option value="4837">4837</option>
+                                    <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
                                     <option value="IPLC">IPLC</option>
                                 </select>
                             </div>
                             <div class="carrier-group">
                                 <span class="carrier-label">移动:</span>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">去程:</span>
                                 <select id="mobileRoute1">
                                     <option value="">留空</option>
+                                    <option value="163">163</option>
+                                    <option value="CN2">CN2</option>
+                                    <option value="CN2GIA">CN2GIA</option>
                                     <option value="CMI">CMI</option>
                                     <option value="CMIN2">CMIN2</option>
+                                    <option value="4837">4837</option>
+                                    <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
                                     <option value="IPLC">IPLC</option>
                                 </select>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">回程:</span>
                                 <select id="mobileRoute2">
                                     <option value="">留空</option>
+                                    <option value="163">163</option>
+                                    <option value="CN2">CN2</option>
+                                    <option value="CN2GIA">CN2GIA</option>
                                     <option value="CMI">CMI</option>
                                     <option value="CMIN2">CMIN2</option>
+                                    <option value="4837">4837</option>
+                                    <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
                                     <option value="IPLC">IPLC</option>
                                 </select>
                             </div>
                             <div class="carrier-group">
                                 <span class="carrier-label">联通:</span>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">去程:</span>
                                 <select id="unicomRoute1">
                                     <option value="">留空</option>
+                                    <option value="163">163</option>
+                                    <option value="CN2">CN2</option>
+                                    <option value="CN2GIA">CN2GIA</option>
+                                    <option value="CMI">CMI</option>
+                                    <option value="CMIN2">CMIN2</option>
                                     <option value="4837">4837</option>
                                     <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
                                     <option value="IPLC">IPLC</option>
                                 </select>
+                            </div>
+                            <div class="carrier-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="white-space: nowrap;">回程:</span>
                                 <select id="unicomRoute2">
                                     <option value="">留空</option>
+                                    <option value="163">163</option>
+                                    <option value="CN2">CN2</option>
+                                    <option value="CN2GIA">CN2GIA</option>
+                                    <option value="CMI">CMI</option>
+                                    <option value="CMIN2">CMIN2</option>
                                     <option value="4837">4837</option>
                                     <option value="10099">10099</option>
                                     <option value="IEPL">IEPL</option>
@@ -497,11 +621,8 @@
 
     <script>
         function formatDateWithTimezone(dateTimeString) {
-            // The input will be like "2025-03-25T00:00"
-            // We need to convert it to "2025-03-25T00:00:00+08:00"
             return dateTimeString + ":00+08:00";
         }
-        // 初始化日期时间输入框
         document.getElementById('startDate').value = getNowDateTimeLocal();
         document.getElementById('endDate').value = getNowDateTimeLocal();
         document.getElementById('cycleStart').value = getNowDateTimeLocal();
@@ -530,6 +651,51 @@
             tabContents[tabIndex].classList.add('active');
         }
 
+        document.getElementById('newTagInput').addEventListener('keydown', function (event) {
+            const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+            if (event.key === 'Enter') {
+                const tagText = event.target.value.trim();
+                if (tagText) {
+                    const newTag = document.createElement('span');
+                    newTag.className = 'tag';
+                    newTag.textContent = tagText;
+                    newTag.onclick = function () {
+                        selectedTagsContainer.removeChild(newTag);
+                        const originalTag = Array.from(document.querySelectorAll('#routeTags .tag')).find(tag => tag.textContent === tagText);
+                        if (originalTag) {
+                            originalTag.classList.remove('selected');
+                        }
+                    };
+                    selectedTagsContainer.appendChild(newTag);
+                    event.target.value = '';
+                }
+            }
+        });
+
+        function toggleTag(tagElement) {
+            tagElement.classList.toggle('selected');
+            const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+            const tagText = tagElement.textContent;
+
+            if (tagElement.classList.contains('selected')) {
+                const newTag = document.createElement('span');
+                newTag.className = 'tag';
+                newTag.textContent = tagText;
+                newTag.onclick = function () {
+                    selectedTagsContainer.removeChild(newTag);
+                    tagElement.classList.remove('selected');
+                };
+                selectedTagsContainer.appendChild(newTag);
+            } else {
+                const tags = selectedTagsContainer.querySelectorAll('.tag');
+                tags.forEach(tag => {
+                    if (tag.textContent === tagText) {
+                        selectedTagsContainer.removeChild(tag);
+                    }
+                });
+            }
+        }
+
         function copyToClipboard(elementId) {
             const textarea = document.getElementById(elementId);
             textarea.select();
@@ -537,7 +703,6 @@
             alert('已复制到剪贴板！');
         }
 
-        // 公开备注代码相关函数
         function toggleCustomCycle() {
             const cycleSelect = document.getElementById('cycle');
             const cycleCustomInput = document.getElementById('cycleCustom');
@@ -548,7 +713,7 @@
             const freeamountCheckbox = document.getElementById('freeamount');
             const amountInputGroup = document.getElementById('amountInputGroup');
             const amountCustomInput = document.getElementById('amountCustom');
-            amountInputGroup.style.display = freeamountCheckbox.checked ? 'none' : 'flex';
+            amountInputGroup.style.display = freeamountCheckbox.checked ? 'none' : 'grid';
             amountCustomInput.style.display = 'none';
         }
 
@@ -562,7 +727,7 @@
             const unlimitedBandwidthCheckbox = document.getElementById('unlimitedBandwidth');
             const bandwidthInputGroup = document.getElementById('bandwidthInputGroup');
             const bandwidthCustomInput = document.getElementById('bandwidthCustom');
-            bandwidthInputGroup.style.display = unlimitedBandwidthCheckbox.checked ? 'none' : 'flex';
+            bandwidthInputGroup.style.display = unlimitedBandwidthCheckbox.checked ? 'none' : 'grid';
             bandwidthCustomInput.style.display = 'none';
         }
 
@@ -575,20 +740,31 @@
         function toggleTraffic() {
             const unlimitedTrafficCheckbox = document.getElementById('unlimitedTraffic');
             const trafficInputGroup = document.getElementById('trafficInputGroup');
-            const trafficCustomGroup = document.getElementById('trafficCustomGroup');
-            trafficInputGroup.style.display = unlimitedTrafficCheckbox.checked ? 'none' : 'flex';
-            trafficCustomGroup.style.display = 'none';
+            const trafficUnitCustom = document.getElementById('trafficUnitCustom');
+            const trafficPeriodCustom = document.getElementById('trafficPeriodCustom');
+            trafficInputGroup.style.display = unlimitedTrafficCheckbox.checked ? 'none' : 'grid';
+            trafficUnitCustom.style.display = 'none';
+            trafficPeriodCustom.style.display = 'none';
         }
 
         function toggleCustomTraffic() {
             const trafficUnitSelect = document.getElementById('trafficUnit');
             const trafficPeriodSelect = document.getElementById('trafficPeriod');
-            const trafficCustomGroup = document.getElementById('trafficCustomGroup');
+            const trafficUnitCustom = document.getElementById('trafficUnitCustom');
+            const trafficPeriodCustom = document.getElementById('trafficPeriodCustom');
 
-            if (trafficUnitSelect.value === 'custom' || trafficPeriodSelect.value === 'custom') {
-                trafficCustomGroup.style.display = 'flex';
-            } else {
-                trafficCustomGroup.style.display = 'none';
+            if (trafficUnitSelect.value === 'custom' && trafficPeriodSelect.value === 'custom') {
+                trafficUnitCustom.style.display = 'block';
+                trafficPeriodCustom.style.display = 'block';
+            } else if (trafficUnitSelect.value === 'custom' && trafficPeriodSelect.value !== 'custom') {
+                trafficUnitCustom.style.display = 'block';
+                trafficPeriodCustom.style.display = 'none';
+            } else if (trafficUnitSelect.value !== 'custom' && trafficPeriodSelect.value === 'custom') {
+                trafficUnitCustom.style.display = 'none';
+                trafficPeriodCustom.style.display = 'block';
+            }else {
+                trafficUnitCustom.style.display = 'none';
+                trafficPeriodCustom.style.display = 'none';
             }
         }
 
@@ -596,19 +772,19 @@
             const routeModeSelect = document.getElementById('routeMode');
             const tagsModeDiv = document.getElementById('tagsMode');
             const carriersModeDiv = document.getElementById('carriersMode');
+            const selectedTags = document.getElementById('selectedTags');
 
             if (routeModeSelect.value === 'tags') {
                 tagsModeDiv.style.display = 'block';
                 carriersModeDiv.style.display = 'none';
+                selectedTags.style.display = 'block';
             } else {
                 tagsModeDiv.style.display = 'none';
                 carriersModeDiv.style.display = 'block';
+                selectedTags.style.display = 'none';
             }
         }
 
-        function toggleTag(tagElement) {
-            tagElement.classList.toggle('selected');
-        }
 
         function generatePublicNoteJSON() {
             const startDate = document.getElementById('startDate').value;
@@ -658,7 +834,8 @@
 
             const routeModeSelect = document.getElementById('routeMode');
             if (routeModeSelect.value === 'tags') {
-                const selectedTags = Array.from(document.querySelectorAll('#routeTags .tag.selected')).map(tag => tag.textContent);
+                const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+                const selectedTags = Array.from(selectedTagsContainer.querySelectorAll('.tag')).map(tag => tag.textContent);
                 networkRoute = selectedTags.join('|');
             } else {
                 const telecomRoute1 = document.getElementById('telecomRoute1').value;
@@ -683,73 +860,70 @@
 
             const extra = document.getElementById('extra').value;
 
-            const jsonOutput = document.getElementById('jsonOutput');
-            const json = {
-                billingDataMod: {
-                    startDate: formatDateWithTimezone(startDate),
-                    endDate: formatDateWithTimezone(endDate),
-                    autoRenewal: autoRenewal,
-                    cycle: cycle,
-                    amount: amount
-                },
-                planDataMod: {
-                    bandwidth: bandwidth,
-                    trafficVol: trafficVol,
-                    trafficType: trafficType,
-                    IPv4: ipv4,
-                    IPv6: ipv6,
-                    networkRoute: networkRoute,
-                    extra: extra
-                }
-            };
+const jsonOutput = document.getElementById('jsonOutput');
+const json = {
+    billingDataMod: {
+        startDate: formatDateWithTimezone(startDate),
+        endDate: formatDateWithTimezone(endDate),
+        autoRenewal: autoRenewal,
+        cycle: cycle,
+        amount: amount
+    },
+    planDataMod: {
+        bandwidth: bandwidth,
+        trafficVol: trafficVol,
+        trafficType: trafficType,
+        IPv4: ipv4,
+        IPv6: ipv6,
+        networkRoute: networkRoute,
+        extra: extra
+    }
+};
 
-            jsonOutput.value = JSON.stringify(json, null, 2);
-        }
+jsonOutput.value = JSON.stringify(json, null, 2);
+}
 
-        // 流量监控代码相关函数
-        function generateTrafficMonitorJSON() {
-            const monitorType = document.getElementById('monitorType').value;
-            const maxTrafficValue = document.getElementById('maxTraffic').value;
-            const maxTrafficUnit = document.getElementById('maxTrafficUnit').value;
-            const cycleStart = document.getElementById('cycleStart').value;
-            const cycleInterval = document.getElementById('cycleInterval').value;
-            const cycleUnit = document.getElementById('cycleUnit').value;
-            const cover = document.getElementById('cover').value;
-            const ignore = document.getElementById('ignore').value;
+function generateTrafficMonitorJSON() {
+const monitorType = document.getElementById('monitorType').value;
+const maxTrafficValue = document.getElementById('maxTraffic').value;
+const maxTrafficUnit = document.getElementById('maxTrafficUnit').value;
+const cycleStart = document.getElementById('cycleStart').value;
+const cycleInterval = document.getElementById('cycleInterval').value;
+const cycleUnit = document.getElementById('cycleUnit').value;
+const cover = document.getElementById('cover').value;
+const ignore = document.getElementById('ignore').value;
 
-            // 转换流量单位为字节
-            let maxBytes = parseFloat(maxTrafficValue);
-            if (maxTrafficUnit === 'GB') {
-                maxBytes *= 1024 * 1024 * 1024;
-            } else if (maxTrafficUnit === 'TB') {
-                maxBytes *= 1024 * 1024 * 1024 * 1024;
-            } else { // MB
-                maxBytes *= 1024 * 1024;
-            }
+let maxBytes = parseFloat(maxTrafficValue);
+if (maxTrafficUnit === 'GB') {
+    maxBytes *= 1024 * 1024 * 1024;
+} else if (maxTrafficUnit === 'TB') {
+    maxBytes *= 1024 * 1024 * 1024 * 1024;
+} else { // MB
+    maxBytes *= 1024 * 1024;
+}
 
-            // 处理选择的服务器
-            const ignoreArray = ignore.split(',').map(item => item.trim()).filter(item => item !== '');
-            const ignoreObject = {};
-            ignoreArray.forEach(item => {
-                ignoreObject[item] = true;
-            });
+const ignoreArray = ignore.split(',').map(item => item.trim()).filter(item => item !== '');
+const ignoreObject = {};
+ignoreArray.forEach(item => {
+    ignoreObject[item] = true;
+});
 
-            const jsonOutput2 = document.getElementById('jsonOutput2');
-            const json = [
-                {
-                    type: monitorType,
-                    max: maxBytes,
-                    cycle_start: formatDateWithTimezone(cycleStart),
-                    cycle_interval: parseInt(cycleInterval),
-                    cycle_unit: cycleUnit,
-                    cover: parseInt(cover),
-                    ignore: ignoreObject
-                }
-            ];
+const jsonOutput2 = document.getElementById('jsonOutput2');
+const json = [
+    {
+        type: monitorType,
+        max: maxBytes,
+        cycle_start: formatDateWithTimezone(cycleStart),
+        cycle_interval: parseInt(cycleInterval),
+        cycle_unit: cycleUnit,
+        cover: parseInt(cover),
+        ignore: ignoreObject
+    }
+];
 
-            jsonOutput2.value = JSON.stringify(json, null, 2);
-        }
-    </script>
+jsonOutput2.value = JSON.stringify(json, null, 2);
+}
+</script>
 </body>
 
 </html>
