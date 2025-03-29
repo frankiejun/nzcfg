@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>NEZHA配置生成器</title>
     <style>
         * {
@@ -207,35 +209,47 @@
             color: #333;
         }
 
-        /* 新增样式 */
+        .dark-mode .section-title {
+            color: #ffffff;
+            border-bottom-color: #4d4d4d;
+        }
+
+        .dark-mode .token.operator{
+            background: none;
+        }
+
+        .dark-mode code[class*="language-"]{
+            text-shadow: none;
+        }
+
         .traffic-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
         }
 
-        .traffic-grid > *:nth-child(1) { /* 流量数值占据第一列 */
-          grid-column: 1 / 2;
+        .traffic-grid>*:nth-child(1) {
+            grid-column: 1 / 2;
         }
 
-        .traffic-grid > *:nth-child(2) { /* 流量单位占据第二列 */
-          grid-column: 2 / 3;
+        .traffic-grid>*:nth-child(2) {
+            grid-column: 2 / 3;
         }
 
-        .traffic-grid > *:nth-child(3) { /* 流量周期占据第三列 */
-          grid-column: 3 / 4;
+        .traffic-grid>*:nth-child(3) {
+            grid-column: 3 / 4;
         }
 
-        .traffic-grid > *:nth-child(4) { /* 自定义流量单位占据第二列 */
-          grid-column: 2 / 3;
+        .traffic-grid>*:nth-child(4) {
+            grid-column: 2 / 3;
         }
 
-        .traffic-grid > *:nth-child(5) { /* 自定义流量周期占据第三列 */
-          grid-column: 3 / 4;
+        .traffic-grid>*:nth-child(5) {
+            grid-column: 3 / 4;
         }
 
-        .traffic-grid > *:nth-child(1),
-        .traffic-grid > *:nth-child(4) {
+        .traffic-grid>*:nth-child(1),
+        .traffic-grid>*:nth-child(4) {
             width: 100%;
         }
 
@@ -245,15 +259,15 @@
             gap: 10px;
         }
 
-        .amount-grid > *:nth-child(1) {
+        .amount-grid>*:nth-child(1) {
             grid-column: 1 / 2;
         }
 
-        .amount-grid > *:nth-child(2) {
+        .amount-grid>*:nth-child(2) {
             grid-column: 2 / 3;
         }
 
-        .amount-grid > *:nth-child(3) {
+        .amount-grid>*:nth-child(3) {
             grid-column: 2 / 3;
         }
 
@@ -263,16 +277,102 @@
             gap: 10px;
         }
 
-        .bandwidth-grid > *:nth-child(1) {
+        .bandwidth-grid>*:nth-child(1) {
             grid-column: 1 / 2;
         }
 
-        .bandwidth-grid > *:nth-child(2) {
+        .bandwidth-grid>*:nth-child(2) {
             grid-column: 2 / 3;
         }
 
-        .bandwidth-grid > *:nth-child(3) {
+        .bandwidth-grid>*:nth-child(3) {
             grid-column: 2 / 3;
+        }
+
+        .dark-mode {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+
+        .dark-mode .container {
+            background-color: #2d2d2d;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode input[type="text"],
+        .dark-mode input[type="number"],
+        .dark-mode input[type="date"],
+        .dark-mode input[type="datetime-local"],
+        .dark-mode select {
+            background-color: #3d3d3d;
+            color: #ffffff;
+            border-color: #4d4d4d;
+        }
+
+        .dark-mode #jsonOutput,
+        .dark-mode #jsonOutput2 {
+            background-color: #2d2d2d;
+            border-color: #4d4d4d;
+            color: #ffffff;
+        }
+
+        .dark-mode .tag {
+            background-color: #4d4d4d;
+            color: #ffffff;
+        }
+
+        .dark-mode .tag.selected {
+            background-color: #4CAF50;
+        }
+
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding: 0 20px;
+        }
+
+        #themeToggle {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        #themeToggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: rotate(15deg);
+        }
+
+        #themeToggle[data-theme="system"] .fa-sun,
+        #themeToggle[data-theme="system"] .fa-moon {
+            display: none;
+        }
+
+        #themeToggle[data-theme="system"] .fa-desktop {
+            display: inline-block;
+        }
+
+        #themeToggle[data-theme="dark"] .fa-sun,
+        #themeToggle[data-theme="dark"] .fa-desktop {
+            display: none;
+        }
+
+        #themeToggle[data-theme="dark"] .fa-moon {
+            display: inline-block;
+        }
+
+        #themeToggle[data-theme="light"] .fa-moon,
+        #themeToggle[data-theme="light"] .fa-desktop {
+            display: none;
+        }
+
+        #themeToggle[data-theme="light"] .fa-sun {
+            display: inline-block;
         }
     </style>
 </head>
@@ -282,6 +382,11 @@
         <div class="tabs">
             <div class="tab active" onclick="switchTab(0)">公开备注代码</div>
             <div class="tab" onclick="switchTab(1)">流量监控代码</div>
+            <div class="theme-switch">
+                <button id="themeToggle" onclick="toggleTheme()" data-theme="system">
+                    <i class="fas fa-desktop"></i>
+                </button>
+            </div>
         </div>
 
         <!-- 公开备注代码 -->
@@ -339,8 +444,7 @@
                                 <option value="EUR">EUR</option>
                                 <option value="custom">自定义</option>
                             </select>
-                            <input type="text" id="amountCustom" placeholder="自定义货币单位"
-                                style="display:none;">
+                            <input type="text" id="amountCustom" placeholder="自定义货币单位" style="display:none;">
                         </div>
                     </div>
 
@@ -357,8 +461,7 @@
                                 <option value="Mbps">Mbps</option>
                                 <option value="custom">自定义</option>
                             </select>
-                            <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位"
-                                style="display:none;">
+                            <input type="text" id="bandwidthCustom" placeholder="自定义带宽单位" style="display:none;">
                         </div>
                     </div>
 
@@ -411,7 +514,6 @@
                             <option value="carriers">分运营商线路模式</option>
                         </select>
 
-                        <!-- 多选标签模式 -->
                         <div id="selectedTags">
                             <div class="tag-container" id="selectedTagsContainer"></div>
                             <input type="text" id="newTagInput" placeholder="输入标签并按回车添加">
@@ -430,7 +532,6 @@
                             </div>
                         </div>
 
-                        <!-- 运营商线路模式 -->
                         <div id="carriersMode" class="carrier-routes" style="display:none;">
                             <div class="carrier-group">
                                 <span class="carrier-label">电信:</span>
@@ -543,7 +644,7 @@
                 </div>
                 <div class="col-right">
                     <button class="copy-btn" onclick="copyToClipboard('jsonOutput')">复制到剪贴板</button>
-                    <textarea id="jsonOutput" readonly></textarea>
+                    <pre id="jsonOutput"><code class="language-json"></code></pre>
                 </div>
             </div>
         </div>
@@ -613,7 +714,7 @@
                 </div>
                 <div class="col-right">
                     <button class="copy-btn" onclick="copyToClipboard('jsonOutput2')">复制到剪贴板</button>
-                    <textarea id="jsonOutput2" readonly></textarea>
+                    <pre id="jsonOutput2"><code class="language-json"></code></pre>
                 </div>
             </div>
         </div>
@@ -697,10 +798,10 @@
         }
 
         function copyToClipboard(elementId) {
-            const textarea = document.getElementById(elementId);
-            textarea.select();
-            document.execCommand('copy');
-            alert('已复制到剪贴板！');
+            var text = document.querySelector("#" + elementId + " code").innerText;
+            navigator.clipboard.writeText(text).then(function () {
+                alert('已复制到剪贴板！');
+            });
         }
 
         function toggleCustomCycle() {
@@ -762,7 +863,7 @@
             } else if (trafficUnitSelect.value !== 'custom' && trafficPeriodSelect.value === 'custom') {
                 trafficUnitCustom.style.display = 'none';
                 trafficPeriodCustom.style.display = 'block';
-            }else {
+            } else {
                 trafficUnitCustom.style.display = 'none';
                 trafficPeriodCustom.style.display = 'none';
             }
@@ -860,70 +961,130 @@
 
             const extra = document.getElementById('extra').value;
 
-const jsonOutput = document.getElementById('jsonOutput');
-const json = {
-    billingDataMod: {
-        startDate: formatDateWithTimezone(startDate),
-        endDate: formatDateWithTimezone(endDate),
-        autoRenewal: autoRenewal,
-        cycle: cycle,
-        amount: amount
-    },
-    planDataMod: {
-        bandwidth: bandwidth,
-        trafficVol: trafficVol,
-        trafficType: trafficType,
-        IPv4: ipv4,
-        IPv6: ipv6,
-        networkRoute: networkRoute,
-        extra: extra
-    }
-};
+            const jsonOutput = document.getElementById('jsonOutput');
+            const json = {
+                billingDataMod: {
+                    startDate: formatDateWithTimezone(startDate),
+                    endDate: formatDateWithTimezone(endDate),
+                    autoRenewal: autoRenewal,
+                    cycle: cycle,
+                    amount: amount
+                },
+                planDataMod: {
+                    bandwidth: bandwidth,
+                    trafficVol: trafficVol,
+                    trafficType: trafficType,
+                    IPv4: ipv4,
+                    IPv6: ipv6,
+                    networkRoute: networkRoute,
+                    extra: extra
+                }
+            };
+            document.querySelector("#jsonOutput code").innerHTML =
+                Prism.highlight(JSON.stringify(json, null, 2), Prism.languages.json, 'json');
+        }
 
-jsonOutput.value = JSON.stringify(json, null, 2);
-}
+        function generateTrafficMonitorJSON() {
+            const monitorType = document.getElementById('monitorType').value;
+            const maxTrafficValue = document.getElementById('maxTraffic').value;
+            const maxTrafficUnit = document.getElementById('maxTrafficUnit').value;
+            const cycleStart = document.getElementById('cycleStart').value;
+            const cycleInterval = document.getElementById('cycleInterval').value;
+            const cycleUnit = document.getElementById('cycleUnit').value;
+            const cover = document.getElementById('cover').value;
+            const ignore = document.getElementById('ignore').value;
 
-function generateTrafficMonitorJSON() {
-const monitorType = document.getElementById('monitorType').value;
-const maxTrafficValue = document.getElementById('maxTraffic').value;
-const maxTrafficUnit = document.getElementById('maxTrafficUnit').value;
-const cycleStart = document.getElementById('cycleStart').value;
-const cycleInterval = document.getElementById('cycleInterval').value;
-const cycleUnit = document.getElementById('cycleUnit').value;
-const cover = document.getElementById('cover').value;
-const ignore = document.getElementById('ignore').value;
+            let maxBytes = parseFloat(maxTrafficValue);
+            if (maxTrafficUnit === 'GB') {
+                maxBytes *= 1024 * 1024 * 1024;
+            } else if (maxTrafficUnit === 'TB') {
+                maxBytes *= 1024 * 1024 * 1024 * 1024;
+            } else { // MB
+                maxBytes *= 1024 * 1024;
+            }
 
-let maxBytes = parseFloat(maxTrafficValue);
-if (maxTrafficUnit === 'GB') {
-    maxBytes *= 1024 * 1024 * 1024;
-} else if (maxTrafficUnit === 'TB') {
-    maxBytes *= 1024 * 1024 * 1024 * 1024;
-} else { // MB
-    maxBytes *= 1024 * 1024;
-}
+            const ignoreArray = ignore.split(',').map(item => item.trim()).filter(item => item !== '');
+            const ignoreObject = {};
+            ignoreArray.forEach(item => {
+                ignoreObject[item] = true;
+            });
 
-const ignoreArray = ignore.split(',').map(item => item.trim()).filter(item => item !== '');
-const ignoreObject = {};
-ignoreArray.forEach(item => {
-    ignoreObject[item] = true;
-});
+            const jsonOutput2 = document.getElementById('jsonOutput2');
+            const json = [
+                {
+                    type: monitorType,
+                    max: maxBytes,
+                    cycle_start: formatDateWithTimezone(cycleStart),
+                    cycle_interval: parseInt(cycleInterval),
+                    cycle_unit: cycleUnit,
+                    cover: parseInt(cover),
+                    ignore: ignoreObject
+                }
+            ];
+            document.querySelector("#jsonOutput2 code").innerHTML =
+                Prism.highlight(JSON.stringify(json, null, 2), Prism.languages.json, 'json');
+        }
 
-const jsonOutput2 = document.getElementById('jsonOutput2');
-const json = [
-    {
-        type: monitorType,
-        max: maxBytes,
-        cycle_start: formatDateWithTimezone(cycleStart),
-        cycle_interval: parseInt(cycleInterval),
-        cycle_unit: cycleUnit,
-        cover: parseInt(cover),
-        ignore: ignoreObject
-    }
-];
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            const currentTheme = themeToggle.getAttribute('data-theme');
+            let newTheme;
 
-jsonOutput2.value = JSON.stringify(json, null, 2);
-}
-</script>
+            if (currentTheme === 'system') {
+                newTheme = 'light';
+                body.classList.remove('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else if (currentTheme === 'light') {
+                newTheme = 'dark';
+                body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                newTheme = 'system';
+                themeToggle.innerHTML = '<i class="fas fa-desktop"></i>';
+                applySystemTheme();
+            }
+
+            themeToggle.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme-preference', newTheme);
+        }
+
+        function applySystemTheme() {
+            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+        }
+
+        function setupSystemThemeListener() {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', (e) => {
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle.getAttribute('data-theme') === 'system') {
+                    document.body.classList.toggle('dark-mode', e.matches);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme-preference') || 'system';
+            themeToggle.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'system') {
+                themeToggle.innerHTML = '<i class="fas fa-desktop"></i>';
+                applySystemTheme();
+            } else if (savedTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                document.body.classList.add('dark-mode');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                document.body.classList.remove('dark-mode');
+            }
+
+            setupSystemThemeListener();
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
 </body>
 
 </html>
