@@ -214,11 +214,11 @@
             border-bottom-color: #4d4d4d;
         }
 
-        .dark-mode .token.operator{
+        .dark-mode .token.operator {
             background: none;
         }
 
-        .dark-mode code[class*="language-"]{
+        .dark-mode code[class*="language-"] {
             text-shadow: none;
         }
 
@@ -329,7 +329,7 @@
             display: flex;
             align-items: center;
             margin-left: auto;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         #themeToggle {
@@ -374,6 +374,23 @@
         #themeToggle[data-theme="light"] .fa-sun {
             display: inline-block;
         }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            padding-right: 20px;
+        }
+
+        .github-link a {
+            color: #fff;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .github-link a:hover {
+            color: #4CAF50;
+        }
     </style>
 </head>
 
@@ -386,6 +403,11 @@
                 <button id="themeToggle" onclick="toggleTheme()" data-theme="system">
                     <i class="fas fa-desktop"></i>
                 </button>
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/ohotto/nzcfg" target="_blank" title="查看GitHub源码">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
         </div>
 
