@@ -405,7 +405,7 @@
                 </button>
             </div>
             <div class="github-link">
-                <a href="https://github.com/ohotto/nzcfg" target="_blank" title="查看GitHub源码">
+                <a href="https://github.com/frankiejun/nzcfg" target="_blank" title="查看GitHub源码">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
@@ -420,6 +420,7 @@
                     <div class="form-group">
                         <label>账单起始日期 (startDate)</label>
                         <input type="datetime-local" id="startDate">
+                        <button type="button" id="permanentButton" onclick="setPermanentEndDate()">永久</button>
                     </div>
 
                     <div class="form-group">
@@ -743,6 +744,10 @@
     </div>
 
     <script>
+        function setPermanentEndDate() {
+            // 设置“永久”按钮点击后结束日期为“2099年12月31日”
+            document.getElementById('endDate').value = '2099-12-31T23:59';
+        }
         function formatDateWithTimezone(dateTimeString) {
             return dateTimeString + ":00+08:00";
         }
