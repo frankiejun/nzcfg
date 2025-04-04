@@ -419,8 +419,6 @@
 
                     <div class="form-group">
                         <label>账单起始日期 (startDate)</label>
-                        <input type="checkbox" id="permanentCheckbox" onclick="setPermanentEndDate()"> <label
-                            for="permanentCheckbox">永久</label>
                         <input type="datetime-local" id="startDate">
                     </div>
 
@@ -428,7 +426,10 @@
                         <label>账单结束日期 (endDate)</label>
                         <input type="datetime-local" id="endDate">
                     </div>
-
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="permanentCheckbox" onclick="setPermanentEndDate()">
+                        <label for="permanentCheckbox" style="font-weight:normal;">永久</label>
+                    </div>
                     <div class="form-group">
                         <label>自动续费状态 (autoRenewal)</label>
                         <select id="autoRenewal">
@@ -746,8 +747,16 @@
 
     <script>
         function setPermanentEndDate() {
-            // 设置“永久”按钮点击后结束日期为“2099年12月31日”
-            document.getElementById('endDate').value = '2099-12-31T23:59';
+            const checkbox = document.getElementById('permanentCheckbox');
+            const endDateInput = document.getElementById('endDate');
+
+            if (checkbox.checked) {
+                // 设置结束日期为“2099年12月31日”如果勾选了“永久”
+                endDateInput.value = '2099-12-31T23:59';
+                endDateInput.disabled = true;  // 禁用日期选择器
+            } else {
+                endDateInput.disabled = false;  // 启用日期选择器
+            }
         }
         function formatDateWithTimezone(dateTimeString) {
             return dateTimeString + ":00+08:00";
