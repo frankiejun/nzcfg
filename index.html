@@ -752,7 +752,7 @@
             const endDateInput = document.getElementById('endDate');
 
             if (checkbox.checked) {
-                // 设置结束日期为“0000-00-00T23:59:59+08:00”如果勾选了“永久”
+                // 设置结束日期为"0000-00-00T23:59:59+08:00"如果勾选了"永久"
                 endDateInput.value = '0000-00-00T23:59:59+08:00';
                 endDateInput.disabled = true;  // 禁用日期选择器
             } else {
@@ -760,6 +760,10 @@
             }
         }
         function formatDateWithTimezone(dateTimeString) {
+            // 如果是永久日期，直接返回
+            if (dateTimeString === '0000-00-00T23:59:59+08:00') {
+                return dateTimeString;
+            }
             return dateTimeString + ":00+08:00";
         }
         document.getElementById('startDate').value = getNowDateTimeLocal();
