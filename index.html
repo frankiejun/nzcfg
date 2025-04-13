@@ -752,8 +752,8 @@
             const endDateInput = document.getElementById('endDate');
 
             if (checkbox.checked) {
-                // 设置结束日期为“2099年12月31日”如果勾选了“永久”
-                endDateInput.value = '2099-12-31T23:59';
+                // 设置结束日期为“0000-00-00T23:59:59+08:00”如果勾选了“永久”
+                endDateInput.value = '0000-00-00T23:59:59+08:00';
                 endDateInput.disabled = true;  // 禁用日期选择器
             } else {
                 endDateInput.disabled = false;  // 启用日期选择器
