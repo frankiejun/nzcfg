@@ -931,7 +931,9 @@
 
         function generatePublicNoteJSON() {
             const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
+            const endDateInput = document.getElementById('endDate');
+            const permanentCheckbox = document.getElementById('permanentCheckbox');
+            const endDate = permanentCheckbox.checked ? '0000-00-00T23:59:59+08:00' : endDateInput.value;
             const autoRenewal = document.getElementById('autoRenewal').value;
             const cycleSelect = document.getElementById('cycle');
             const cycleCustom = document.getElementById('cycleCustom').value;
